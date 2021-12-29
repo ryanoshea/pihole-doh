@@ -1,0 +1,22 @@
+version: "2"
+services:
+  cloudflared:
+    build: ./cloudflared
+    ports:
+      - 5053:5053/udp
+      - 5053:5053/tcp
+  # test-server:
+  #   image: hjacobs/tiny-docker-http-test
+  #   ports:
+  #     - 23777:8080/udp
+  #     - 23777:8080/tcp
+#     networks:
+#       vpcbr:
+#         ipv4_address: 10.5.0.5
+# networks:
+#   vpcbr:
+#     driver: bridge
+#     ipam:
+#      config:
+#        - subnet: 10.5.0.0/16
+#          gateway: 10.5.0.1
