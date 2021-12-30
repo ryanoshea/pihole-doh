@@ -15,15 +15,12 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "67:67/udp"
-      - "80:80/tcp"
+      - "5550:80/tcp"
     environment:
       TZ: 'America/New_York'
     volumes:
       - './etc-pihole:/etc/pihole'
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
-    cap_add:
-      - NET_ADMIN
     restart: unless-stopped
     networks:
       vpcbr:
