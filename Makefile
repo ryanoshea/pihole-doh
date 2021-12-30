@@ -6,4 +6,4 @@ rebuild:
 
 stop:
 	docker-compose down --remove-orphans && \
-	docker image prune
+	docker image prune -f
