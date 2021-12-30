@@ -1,22 +1,39 @@
-version: "2"
+version: "3"
 services:
   cloudflared:
     build: ./cloudflared
     ports:
       - 5053:5053/udp
       - 5053:5053/tcp
-  # test-server:
-  #   image: hjacobs/tiny-docker-http-test
-  #   ports:
-  #     - 23777:8080/udp
-  #     - 23777:8080/tcp
-#     networks:
-#       vpcbr:
-#         ipv4_address: 10.5.0.5
-# networks:
-#   vpcbr:
-#     driver: bridge
-#     ipam:
-#      config:
-#        - subnet: 10.5.0.0/16
-#          gateway: 10.5.0.1
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.5
+    restart: unless-stopped
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'America/New_York'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    networks:
+      vpcbr:
+        ipv4_address: 10.5.0.6
+    depends_on:
+      - cloudflared
+networks:
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
