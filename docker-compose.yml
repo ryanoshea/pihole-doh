@@ -1,14 +1,19 @@
 version: "3"
 services:
   cloudflared:
-    build: ./cloudflared
+    image: crazymax/cloudflared:2021.11.0
+    restart: unless-stopped
+    environment:
+      TZ: 'America/New_York'
+      TUNNEL_DNS_PORT: '5053'
+      TUNNEL_DNS_ADDRESS: '0.0.0.0'
+      TUNNEL_DNS_UPSTREAM: 'https://1.1.1.1/dns-query,https://1.0.0.1/dns-query,https://dns.quad9.net/dns-query,https://dns9.quad9.net/dns-query'
     ports:
       - 5053:5053/udp
       - 5053:5053/tcp
     networks:
       vpcbr:
         ipv4_address: 10.5.0.5
-    restart: unless-stopped
   pihole:
     container_name: pihole
     image: pihole/pihole:latest
