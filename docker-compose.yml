@@ -20,7 +20,7 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "5550:80/tcp"
+      - "${PIHOLE_WEB_PORT:-5550}:80/tcp"
     environment:
       TZ: 'America/New_York'
       PIHOLE_DNS_: 10.5.0.5#5053 # Use cloudflared as upstream DNS server
