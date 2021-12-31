@@ -9,7 +9,7 @@ services:
       TUNNEL_DNS_ADDRESS: '0.0.0.0'
       TUNNEL_DNS_UPSTREAM: 'https://1.1.1.1/dns-query,https://1.0.0.1/dns-query,https://dns.quad9.net/dns-query,https://dns9.quad9.net/dns-query'
     networks:
-      vpcbr:
+      lan:
         ipv4_address: 10.5.0.5
   pihole:
     container_name: pihole
@@ -26,12 +26,12 @@ services:
       - './etc-dnsmasq.d:/etc/dnsmasq.d'
     restart: unless-stopped
     networks:
-      vpcbr:
+      lan:
         ipv4_address: 10.5.0.6
     depends_on:
       - cloudflared
 networks:
-  vpcbr:
+  lan:
     driver: bridge
     ipam:
      config:
