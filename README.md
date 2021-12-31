@@ -1,6 +1,6 @@
 # pihole-doh
 
-Docker Compose-based pihole deployment for getting up and running with DNS Over HTTPS. Spins up two containers:
+Docker Compose-based Pi-Hole deployment for getting up and running with DNS Over HTTPS. Spins up two containers:
 
 1. An instance of `cloudflared` (image provided by [crazymax/cloudflared](https://github.com/crazy-max/docker-cloudflared)) for proxying DNS lookups to DNS Over HTTPS servers provided by [Cloudflare (1.1.1.1)](https://1.1.1.1/dns/) and [Quad9 (9.9.9.9)](https://www.quad9.net). The proxy handles DNS queries on port 5053, though this is only exposed on the local Docker network.
 1. A `pi-hole` instance (official image [pi-hole/docker-pi-hole](https://github.com/pi-hole/docker-pi-hole)) configured to use the above DoH proxy as its upstream.
